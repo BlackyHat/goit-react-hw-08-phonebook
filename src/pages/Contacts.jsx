@@ -4,6 +4,9 @@ import { getIsLoading, getError } from 'redux/selectors';
 // import Section from 'components/Section/Section';
 import Filter from 'components/FilterContacts/FilterContacts';
 import ContactList from 'components/ContactList/ContactList';
+// import { useEffect } from 'react';
+// import { useDispatch } from 'react-redux';
+// import { fetchContacts } from 'redux/operations';
 
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { LoginButtons } from 'components/LoginButtons/LoginButtons';
@@ -14,6 +17,11 @@ import BasicModal from 'components/BasicModal/BasicModal';
 const Contacts = () => {
   const isLoading = useSelector(getIsLoading);
   const error = useSelector(getError);
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(fetchContacts());
+  // }, [dispatch]);
 
   return (
     <main>

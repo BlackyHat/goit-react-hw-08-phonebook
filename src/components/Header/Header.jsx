@@ -12,14 +12,13 @@ import {
 } from '@chakra-ui/react';
 import logo from './logo.png';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import { LoginButtons } from 'components/LoginButtons/LoginButtons';
 import { UserMenu } from 'components/UserMenu/UserMenu';
-import { getIsLoggedIn } from 'redux/auth/auth-selectors';
+import { useAuth } from 'hooks/useAuth';
 
 export const Header = () => {
-  const isLoggedIn = useSelector(getIsLoggedIn);
+  const { isLoggedIn } = useAuth();
 
   const { colorMode, toggleColorMode } = useColorMode();
   console.log('isLoggedIn', isLoggedIn);
