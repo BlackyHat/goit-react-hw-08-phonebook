@@ -9,7 +9,7 @@ import Layout from 'components/Layout';
 // import SignUp from 'pages/SignUp';
 // import LogInComponent from './LogIn/LogIn';
 import Contacts from 'pages/Contacts';
-import { useAuth } from 'hooks/useAuth';
+// import { useAuth } from 'hooks/useAuth';
 // import Login from 'pages/Login';
 
 const HomePage = lazy(() => import('../pages/HomePage'));
