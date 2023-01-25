@@ -27,21 +27,3 @@ export const FilteredListItem = styled.li`
     gap: 8px;
   }
 `;
-export const DeleteBtn = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  font-family: 'Roboto', monospace;
-  width: 80px;
-  height: 24px;
-  background-color: #d6eaed;
-  border: 1px solid #efefef;
-  border-radius: 6px;
-  transition: background-color 350ms linear;
-  cursor: poiter;
-
-  &:hover {
-    background-color: #8bcad1;
-  }
-`;

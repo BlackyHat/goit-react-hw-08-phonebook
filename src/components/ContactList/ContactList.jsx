@@ -2,13 +2,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getContacts, getFilterValue } from 'redux/selectors';
 import { deleteContact } from 'redux/operations';
 import PropTypes from 'prop-types';
+import { Button } from '@chakra-ui/react';
 
 import { BsTelephoneForward, BsPersonX } from 'react-icons/bs';
-import {
-  FilteredList,
-  FilteredListItem,
-  DeleteBtn,
-} from './ContactList.styled';
+import { FilteredList, FilteredListItem } from './ContactList.styled';
 
 export default function ContactList() {
   const dispatch = useDispatch();
@@ -38,9 +35,16 @@ export default function ContactList() {
                   <BsTelephoneForward />
                   {name + ': ' + number}{' '}
                 </p>
-                <DeleteBtn type="button" onClick={() => onDeleteContact(id)}>
-                  delete <BsPersonX size={14} />
-                </DeleteBtn>
+                <Button
+                  colorScheme="red"
+                  type="button"
+                  variant="outline"
+                  align="center"
+                  size="sm"
+                  onClick={() => onDeleteContact(id)}
+                >
+                  <BsPersonX size={14} />
+                </Button>
               </FilteredListItem>
             );
           })}

@@ -1,16 +1,22 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
 import { addContact } from 'redux/operations';
+import { Formik } from 'formik';
 
-import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-import { FormBetter } from './ContactForm.styled';
-import { BsPersonPlus } from 'react-icons/bs';
+import { Box, Button } from '@chakra-ui/react';
+import { FormTextField } from 'components/FormTextField/FormTextField';
 
 const schemaAddContact = Yup.object().shape({
-  name: Yup.string().min(4).max(32).required(),
-  number: Yup.string().min(4).max(9).required(),
+  name: Yup.string()
+    .required('User name required')
+    .min(4, 'Contact name is too short')
+    .max(32, 'Contact name is too long'),
+  number: Yup.string()
+    .required('Phone number required')
+    .min(7, 'Phone number is too short, must be 7-10 digits')
+    .max(10, 'Phone number is too long, must be 7-10 digits'),
 });
 
 const initialValues = {
@@ -23,6 +29,7 @@ export default function ContactForm() {
   const items = useSelector(getContacts);
 
   const handleSubmit = (values, { resetForm }) => {
+    console.log(values);
     addNewContact(values);
     resetForm();
   };
@@ -37,43 +44,35 @@ export default function ContactForm() {
       ({ name }) => name.toLowerCase() === newContact.name.toLowerCase()
     );
   };
-
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={schemaAddContact}
       onSubmit={handleSubmit}
     >
-      {}
-      <FormBetter>
-        <label>
-          Name
-          <Field
+      {formik => (
+        <Box as="form" onSubmit={formik.handleSubmit}>
+          <FormTextField
+            label="Name"
             type="text"
             name="name"
             required
             autoComplete="false"
             placeholder="input your name"
           />
-          <ErrorMessage component="div" name="name" />
-        </label>
-        <label>
-          Number
-          <Field
-            type="tel"
+          <FormTextField
+            label="Number"
             name="number"
+            type="tel"
             required
             placeholder="input your number"
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           />
-          <ErrorMessage component="div" name="number" />
-        </label>
-        <button type="submit">
-          <BsPersonPlus size={16} />
-          Add contact
-        </button>
-      </FormBetter>
+          <Button type="submit" colorScheme="teal" variant="outline" mt="8">
+            Add contact
+          </Button>
+        </Box>
+      )}
     </Formik>
   );
 }
