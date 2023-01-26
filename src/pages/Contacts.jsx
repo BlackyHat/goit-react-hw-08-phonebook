@@ -26,7 +26,7 @@ const Contacts = () => {
   // }, [dispatch]);
 
   return (
-    <main>
+    <Box w="100%">
       {!isLoggedIn ? (
         <Box
           w="100%"
@@ -59,7 +59,7 @@ const Contacts = () => {
           <ContactList />
         </>
       )}
-    </main>
+    </Box>
   );
 };
 
