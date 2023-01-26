@@ -1,19 +1,24 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { getContacts, getFilterValue } from 'redux/selectors';
-import { deleteContact } from 'redux/operations';
+import { useDispatch } from 'react-redux';
+import { deleteContact } from 'redux/contacts/contacts-operations';
 import PropTypes from 'prop-types';
-import { Button } from '@chakra-ui/react';
+import CustomToast from 'components/Toast';
 
-import { BsTelephoneForward, BsPersonX } from 'react-icons/bs';
-import { FilteredList, FilteredListItem } from './ContactList.styled';
+import { DeleteIcon } from '@chakra-ui/icons';
+import { Box, Flex, Avatar, Text, IconButton, Heading } from '@chakra-ui/react';
+
+import { useContacts } from 'hooks';
 
 export default function ContactList() {
   const dispatch = useDispatch();
-  const items = useSelector(getContacts);
-  const filter = useSelector(getFilterValue);
+  const { items, filter } = useContacts();
+  const { addToast } = CustomToast();
 
   const onDeleteContact = delContactId => {
     dispatch(deleteContact(delContactId));
+    addToast({
+      info: `Contact deleted`,
+      status: 'error',
+    });
   };
 
   const getFilteredContacts = () => {
@@ -27,28 +32,36 @@ export default function ContactList() {
   return (
     <>
       {items.length > 0 && (
-        <FilteredList>
+        <Flex w="100%" as="ul" wrap="wrap" justify="space-between" mb={12}>
           {filteredContactsList.map(({ id, name, number }) => {
             return (
-              <FilteredListItem key={id}>
-                <p>
-                  <BsTelephoneForward />
-                  {name + ': ' + number}{' '}
-                </p>
-                <Button
+              <Flex
+                key={id}
+                justify="space-between"
+                w={['100%', '50%', '50%']}
+                p="4"
+                as="li"
+                align="center"
+              >
+                <Avatar name={name} bg="teal.900"></Avatar>
+                <Box textAlign="left">
+                  <Heading size="sm" noOfLines={1}>
+                    {name}
+                  </Heading>
+                  <Text noOfLines={1}>{number}</Text>
+                </Box>
+
+                <IconButton
+                  aria-label="delete contact"
+                  icon={<DeleteIcon />}
                   colorScheme="red"
-                  type="button"
-                  variant="outline"
-                  align="center"
-                  size="sm"
+                  variant="ghost"
                   onClick={() => onDeleteContact(id)}
-                >
-                  <BsPersonX size={14} />
-                </Button>
-              </FilteredListItem>
+                />
+              </Flex>
             );
           })}
-        </FilteredList>
+        </Flex>
       )}
     </>
   );

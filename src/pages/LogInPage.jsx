@@ -3,15 +3,16 @@ import { logIn } from 'redux/auth/auth-operations';
 
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import CustomToast from 'components/Toast';
 
 import { Box, Button } from '@chakra-ui/react';
-import { FormTextField } from 'components/FormTextField/FormTextField';
+import FormTextField from 'components/FormTextField';
 
 const schemaAddContact = Yup.object().shape({
   email: Yup.string()
-    .required('Login name required')
-    .min(4, 'Login name is too short')
-    .max(32, 'Login name is too long'),
+    .required('E-mail name required')
+    .min(4, 'E-mail name is too short')
+    .max(32, 'E-mail name is too long'),
   password: Yup.string()
     .required('Password number required')
     .min(7, 'Password number is too short, must be 7-10 digits')
@@ -25,14 +26,17 @@ const initialValues = {
 
 const LogInPage = () => {
   const dispatch = useDispatch();
+  const { addToast } = CustomToast();
 
   const handleSubmit = (values, { resetForm }) => {
-    console.log(values);
     const { email, password } = values;
     dispatch(logIn({ email, password }));
     resetForm();
+    addToast({
+      info: `Welcome back`,
+      status: 'success',
+    });
   };
-
   return (
     <Formik
       initialValues={initialValues}
@@ -62,6 +66,7 @@ const LogInPage = () => {
             variant="outline"
             mt="8"
             w="100%"
+            isDisabled={!(formik.isValid && formik.dirty)}
           >
             Log in
           </Button>

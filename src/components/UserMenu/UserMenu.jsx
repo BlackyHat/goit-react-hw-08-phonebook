@@ -1,10 +1,20 @@
 import { useDispatch } from 'react-redux';
-
-import { Box, Avatar, AvatarBadge, Text, Button } from '@chakra-ui/react';
 import { logOut } from 'redux/auth/auth-operations';
 import { useAuth } from 'hooks/useAuth';
 
-export const UserMenu = () => {
+import {
+  Box,
+  Avatar,
+  AvatarBadge,
+  Text,
+  Button,
+  Show,
+  IconButton,
+  Hide,
+} from '@chakra-ui/react';
+import { ImExit } from 'react-icons/im';
+
+const UserMenu = () => {
   const dispatch = useDispatch();
   const { user } = useAuth();
   const hadleLogOut = () => dispatch(logOut());
@@ -16,19 +26,32 @@ export const UserMenu = () => {
       justifyContent="center"
       gap="4"
     >
-      <Avatar name={user.name} bg="teal.900">
-        <AvatarBadge boxSize="1.25em" bg="green.500" />
-      </Avatar>
-      <Text fontSize="lg">{user.name} </Text>
+      <Show below="md">
+        <IconButton
+          aria-label="log out"
+          icon={<ImExit size="22" />}
+          colorScheme="teal"
+          variant="ghost"
+          onClick={hadleLogOut}
+        />
+      </Show>
 
-      <Button
-        type="button"
-        colorScheme="teal"
-        variant="outline"
-        onClick={hadleLogOut}
-      >
-        Log Out
-      </Button>
+      <Hide below="md">
+        <Avatar name={user.name} bg="teal.900">
+          <AvatarBadge boxSize="1.25em" bg="green.500" />
+        </Avatar>
+        <Text fontSize="lg">{user.name} </Text>
+        <Button
+          type="button"
+          colorScheme="teal"
+          variant="outline"
+          onClick={hadleLogOut}
+        >
+          Log Out
+        </Button>
+      </Hide>
     </Box>
   );
 };
+
+export default UserMenu;
