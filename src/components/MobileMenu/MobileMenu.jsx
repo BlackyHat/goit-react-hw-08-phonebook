@@ -78,6 +78,3 @@ const MobileMenu = () => {
 };
 
 export default MobileMenu;
-
-// <ColorModeSwitcher />
-// <Spacer />
