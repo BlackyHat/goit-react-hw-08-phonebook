@@ -16,7 +16,7 @@ const schemaAddContact = Yup.object().shape({
     .required('User name required')
     .min(4, 'Contact name is too short')
     .max(16, 'Contact name is too long'),
-  number: Yup.number('Phone number required')
+  number: Yup.string('Phone number required')
     .required('Phone number required')
     .min(5, 'Phone number is too short, must be 7-10 digits')
     .max(12, 'Phone number is too long, must be 7-10 digits'),
