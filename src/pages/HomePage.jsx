@@ -1,5 +1,7 @@
 import { Box, Text } from '@chakra-ui/react';
 
+// import WelcomeLogo from './welcome_logo.jpg';
+
 const HomePage = () => {
   return (
     <Box
@@ -8,6 +10,7 @@ const HomePage = () => {
       align="center"
       direction="column"
       py="24"
+      // bgImage={`url('${WelcomeLogo}')`}
       bgPosition="center"
       bgRepeat="no-repeat"
     >
