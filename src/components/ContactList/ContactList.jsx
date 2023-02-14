@@ -10,9 +10,8 @@ import { useContacts } from 'hooks';
 
 export default function ContactList() {
   const dispatch = useDispatch();
-  const { items, filter } = useContacts();
+  const { filteredContactsList } = useContacts();
   const { addToast } = CustomToast();
-
   const onDeleteContact = delContactId => {
     dispatch(deleteContact(delContactId));
     addToast({
@@ -21,17 +20,9 @@ export default function ContactList() {
     });
   };
 
-  const getFilteredContacts = () => {
-    const normaliziedFilter = filter.toLowerCase();
-    return items.filter(({ name }) =>
-      name.toLowerCase().includes(normaliziedFilter)
-    );
-  };
-
-  const filteredContactsList = getFilteredContacts();
   return (
     <>
-      {items.length > 0 && (
+      {filteredContactsList.length > 0 ? (
         <Flex w="100%" as="ul" wrap="wrap" justify="space-between" mb={12}>
           {filteredContactsList.map(({ id, name, number }) => {
             return (
@@ -62,6 +53,8 @@ export default function ContactList() {
             );
           })}
         </Flex>
+      ) : (
+        <Text align="center">Try to add some contacts ...</Text>
       )}
     </>
   );
